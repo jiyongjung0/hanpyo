@@ -13,7 +13,7 @@ export const loadCSVData = async (): Promise<ForeignWordEntry[]> => {
         complete: (results) => {
           resolve(results.data);
         },
-        error: (error) => {
+        error: (error: Error) => {
           reject(error);
         },
       });
