@@ -1,9 +1,10 @@
 import Papa from 'papaparse';
 import type { ForeignWordEntry } from '../types/ForeignWord';
+import csvFile from '../assets/20251013.csv?url';
 
 export const loadCSVData = async (): Promise<ForeignWordEntry[]> => {
   try {
-    const response = await fetch('/src/assets/20251013.csv');
+    const response = await fetch(csvFile);
     const csvText = await response.text();
 
     return new Promise((resolve, reject) => {
