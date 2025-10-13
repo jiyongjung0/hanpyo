@@ -44,6 +44,16 @@ describe('searchUtils', () => {
       expect(result).toEqual([])
     })
 
+    it('한 글자로 검색하면 빈 배열을 반환한다', () => {
+      const result = filterByOriginalText(mockData, 'J')
+      expect(result).toEqual([])
+    })
+
+    it('최소 길이보다 짧으면 빈 배열을 반환한다', () => {
+      const result = filterByOriginalText(mockData, 'a', 3)
+      expect(result).toEqual([])
+    })
+
     it('대소문자 구분 없이 검색한다', () => {
       const result = filterByOriginalText(mockData, 'josie')
       expect(result).toHaveLength(1)

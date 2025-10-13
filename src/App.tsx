@@ -39,7 +39,13 @@ function App() {
 
       {searchQuery && <ResultsTable data={filteredData} />}
 
-      {searchQuery && filteredData.length === 0 && (
+      {searchQuery && searchQuery.trim().length === 1 && (
+        <div className="no-results">
+          두 글자 이상 입력해주세요.
+        </div>
+      )}
+
+      {searchQuery && searchQuery.trim().length >= 2 && filteredData.length === 0 && (
         <div className="no-results">
           검색 결과가 없습니다.
         </div>
