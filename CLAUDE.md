@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **hanpyo**는 TypeScript와 Vite로 구축된 React 웹 애플리케이션입니다. React 19를 사용하며, ESLint를 통한 린팅과 빠른 개발 및 최적화된 프로덕션 빌드를 위한 Vite를 포함한 최신 도구를 사용합니다.
 
+**저장소**: https://github.com/jiyongjung0/hanpyo
+
 ## 개발 명령어
 
 ```bash
