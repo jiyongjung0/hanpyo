@@ -1,10 +1,16 @@
 import type { ForeignWordEntry } from '../types/ForeignWord'
+import { isValidSearchQuery } from '../utils/search'
 
 interface ResultsTableProps {
   data: ForeignWordEntry[]
+  query: string
 }
 
-export const ResultsTable = ({ data }: ResultsTableProps) => {
+export const ResultsTable = ({ data, query }: ResultsTableProps) => {
+  if (!isValidSearchQuery(query)) {
+    return <div className="no-results">두 글자 이상 입력해주세요.</div>
+  }
+
   if (data.length === 0) {
     return <div className="no-results">검색 결과가 없습니다.</div>
   }

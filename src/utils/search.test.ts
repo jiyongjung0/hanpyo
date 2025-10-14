@@ -1,8 +1,40 @@
 import { describe, it, expect } from 'vitest'
-import { filterByOriginalText } from './search'
+import { filterByOriginalText, isValidSearchQuery } from './search'
 import type { ForeignWordEntry } from '../types/ForeignWord'
 
-describe('searchUtils', () => {
+describe('search', () => {
+  describe('isValidSearchQuery', () => {
+    it('빈 문자열은 유효하지 않다', () => {
+      expect(isValidSearchQuery('')).toBe(false)
+    })
+
+    it('공백만 있는 문자열은 유효하지 않다', () => {
+      expect(isValidSearchQuery('   ')).toBe(false)
+    })
+
+    it('1글자는 유효하지 않다', () => {
+      expect(isValidSearchQuery('a')).toBe(false)
+    })
+
+    it('2글자는 유효하다', () => {
+      expect(isValidSearchQuery('ab')).toBe(true)
+    })
+
+    it('3글자 이상은 유효하다', () => {
+      expect(isValidSearchQuery('abc')).toBe(true)
+    })
+
+    it('공백이 포함된 2글자 이상은 유효하다', () => {
+      expect(isValidSearchQuery('  ab  ')).toBe(true)
+    })
+
+    it('커스텀 최소 길이를 지정할 수 있다', () => {
+      expect(isValidSearchQuery('a', 1)).toBe(true)
+      expect(isValidSearchQuery('ab', 3)).toBe(false)
+      expect(isValidSearchQuery('abc', 3)).toBe(true)
+    })
+  })
+
   describe('filterByOriginalText', () => {
     const mockData: ForeignWordEntry[] = [
       {
@@ -46,11 +78,6 @@ describe('searchUtils', () => {
 
     it('한 글자로 검색하면 빈 배열을 반환한다', () => {
       const result = filterByOriginalText(mockData, 'J')
-      expect(result).toEqual([])
-    })
-
-    it('최소 길이보다 짧으면 빈 배열을 반환한다', () => {
-      const result = filterByOriginalText(mockData, 'a', 3)
       expect(result).toEqual([])
     })
 

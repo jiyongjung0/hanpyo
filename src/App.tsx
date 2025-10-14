@@ -38,11 +38,7 @@ function App() {
         resultCount={filteredData.length}
       />
 
-      {searchQuery && searchQuery.trim().length === 1 && (
-        <div className="no-results">두 글자 이상 입력해주세요.</div>
-      )}
-
-      {searchQuery && searchQuery.trim().length >= 2 && <ResultsTable data={filteredData} />}
+      {searchQuery && <ResultsTable data={filteredData} query={searchQuery} />}
 
       <p className="data-source">
         데이터 출처:{' '}

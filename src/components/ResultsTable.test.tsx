@@ -25,13 +25,18 @@ describe('ResultsTable', () => {
     },
   ]
 
-  it('빈 데이터일 때 "검색 결과가 없습니다" 메시지를 표시한다', () => {
-    render(<ResultsTable data={[]} />)
+  it('검색어가 1글자일 때 "두 글자 이상 입력해주세요" 메시지를 표시한다', () => {
+    render(<ResultsTable data={[]} query="a" />)
+    expect(screen.getByText('두 글자 이상 입력해주세요.')).toBeInTheDocument()
+  })
+
+  it('검색어가 2글자 이상이고 빈 데이터일 때 "검색 결과가 없습니다" 메시지를 표시한다', () => {
+    render(<ResultsTable data={[]} query="test" />)
     expect(screen.getByText('검색 결과가 없습니다.')).toBeInTheDocument()
   })
 
   it('테이블 헤더를 렌더링한다', () => {
-    render(<ResultsTable data={mockData} />)
+    render(<ResultsTable data={mockData} query="test" />)
 
     expect(screen.getByText('구분')).toBeInTheDocument()
     expect(screen.getByText('한글 표기')).toBeInTheDocument()
@@ -42,7 +47,7 @@ describe('ResultsTable', () => {
   })
 
   it('검색 결과 데이터를 렌더링한다', () => {
-    render(<ResultsTable data={mockData} />)
+    render(<ResultsTable data={mockData} query="test" />)
 
     expect(screen.getByText('하우스, 조시')).toBeInTheDocument()
     expect(screen.getByText('Josie Howse')).toBeInTheDocument()
@@ -54,7 +59,7 @@ describe('ResultsTable', () => {
   })
 
   it('모든 데이터 행을 렌더링한다', () => {
-    render(<ResultsTable data={mockData} />)
+    render(<ResultsTable data={mockData} query="test" />)
 
     const rows = screen.getAllByRole('row')
     // 헤더 행 + 데이터 행 2개 = 3개
