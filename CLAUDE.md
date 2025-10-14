@@ -15,6 +15,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - CSV 데이터 파싱 및 필터링 (PapaParse 사용)
 - 검색 결과 테이블 표시 (한글 표기, 원어 표기, 언어명, 국명, 의미)
 - 데이터 출처 및 업데이트 날짜 표시
+- 키보드 단축키 지원 (ESC: 입력 지우기, Enter: 전체 선택)
+- 자동 포커스 및 Clear 버튼
 - 반응형 디자인
 
 ## 개발 명령어
