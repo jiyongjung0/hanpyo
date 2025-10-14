@@ -6,7 +6,7 @@ interface ResultsTableProps {
 
 export const ResultsTable = ({ data }: ResultsTableProps) => {
   if (data.length === 0) {
-    return null
+    return <div className="no-results">검색 결과가 없습니다.</div>
   }
 
   return (

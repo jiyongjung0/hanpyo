@@ -25,9 +25,9 @@ describe('ResultsTable', () => {
     },
   ]
 
-  it('빈 데이터일 때 아무것도 렌더링하지 않는다', () => {
-    const { container } = render(<ResultsTable data={[]} />)
-    expect(container.firstChild).toBeNull()
+  it('빈 데이터일 때 "검색 결과가 없습니다" 메시지를 표시한다', () => {
+    render(<ResultsTable data={[]} />)
+    expect(screen.getByText('검색 결과가 없습니다.')).toBeInTheDocument()
   })
 
   it('테이블 헤더를 렌더링한다', () => {
