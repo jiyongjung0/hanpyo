@@ -30,12 +30,12 @@ export default defineConfig({
         name: 'Hanpyo - 외래어 표기 검색',
         short_name: 'Hanpyo',
         description: '국립국어원 외래어 표기 용례 검색',
-        theme_color: '#646cff',
+        theme_color: '#16a34a',
         background_color: '#ffffff',
         display: 'standalone',
         icons: [
           {
-            src: '/hanpyo/vite.svg',
+            src: '/hanpyo/favicon.svg',
             sizes: 'any',
             type: 'image/svg+xml',
           },
