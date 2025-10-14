@@ -46,6 +46,23 @@
   font-weight: 500;
 }
 
+.data-source {
+  text-align: center;
+  margin: 1rem 0 2rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.data-source a {
+  color: #16a34a;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.data-source a:hover {
+  text-decoration: underline;
+}
+
 .results-section {
   overflow-x: auto;
   border-radius: 8px;

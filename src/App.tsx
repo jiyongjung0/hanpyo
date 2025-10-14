@@ -3,6 +3,7 @@ import { useForeignWordData } from './hooks/useForeignWordData'
 import { useSearch } from './hooks/useSearch'
 import { SearchInput } from './components/SearchInput'
 import { ResultsTable } from './components/ResultsTable'
+import { DATA_UPDATE_DATE } from './dataUpdateDate'
 
 function App() {
   const { data, loading, error } = useForeignWordData()
@@ -36,6 +37,18 @@ function App() {
         onChange={setSearchQuery}
         resultCount={filteredData.length}
       />
+
+      <p className="data-source">
+        데이터 출처:{' '}
+        <a
+          href="https://korean.go.kr/kornorms/example/exampleList.do?regltn_code=0003"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          국립국어원 외래어 표기 용례
+        </a>
+        {' '}({DATA_UPDATE_DATE} 다운로드)
+      </p>
 
       {searchQuery && <ResultsTable data={filteredData} />}
 
