@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { filterByOriginalText } from './searchUtils'
+import { filterByOriginalText } from './search'
 import type { ForeignWordEntry } from '../types/ForeignWord'
 
 describe('searchUtils', () => {

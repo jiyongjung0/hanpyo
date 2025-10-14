@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import type { ForeignWordEntry } from '../types/ForeignWord'
-import { filterByOriginalText } from '../utils/searchUtils'
+import { filterByOriginalText } from '../utils/search'
 
 export const useSearch = (data: ForeignWordEntry[]) => {
   const [searchQuery, setSearchQuery] = useState('')
