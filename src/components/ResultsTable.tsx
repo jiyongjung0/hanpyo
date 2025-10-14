@@ -8,7 +8,7 @@ interface ResultsTableProps {
 
 export const ResultsTable = ({ data, query }: ResultsTableProps) => {
   if (!isValidSearchQuery(query)) {
-    return <div className="no-results">두 글자 이상 입력해주세요.</div>
+    return <div className="no-results">영어는 두 글자 이상 입력해주세요.</div>
   }
 
   if (data.length === 0) {

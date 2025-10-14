@@ -12,26 +12,30 @@ describe('search', () => {
       expect(isValidSearchQuery('   ')).toBe(false)
     })
 
-    it('1글자는 유효하지 않다', () => {
+    it('영어 알파벳 1글자는 유효하지 않다', () => {
       expect(isValidSearchQuery('a')).toBe(false)
+      expect(isValidSearchQuery('Z')).toBe(false)
     })
 
-    it('2글자는 유효하다', () => {
+    it('한자 1글자는 유효하다', () => {
+      expect(isValidSearchQuery('深')).toBe(true)
+    })
+
+    it('한글 1글자는 유효하다', () => {
+      expect(isValidSearchQuery('가')).toBe(true)
+    })
+
+    it('키릴 문자 1글자는 유효하다', () => {
+      expect(isValidSearchQuery('А')).toBe(true)
+    })
+
+    it('영어 알파벳 2글자 이상은 유효하다', () => {
       expect(isValidSearchQuery('ab')).toBe(true)
-    })
-
-    it('3글자 이상은 유효하다', () => {
       expect(isValidSearchQuery('abc')).toBe(true)
     })
 
     it('공백이 포함된 2글자 이상은 유효하다', () => {
       expect(isValidSearchQuery('  ab  ')).toBe(true)
-    })
-
-    it('커스텀 최소 길이를 지정할 수 있다', () => {
-      expect(isValidSearchQuery('a', 1)).toBe(true)
-      expect(isValidSearchQuery('ab', 3)).toBe(false)
-      expect(isValidSearchQuery('abc', 3)).toBe(true)
     })
   })
 
