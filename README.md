@@ -14,7 +14,7 @@
 - 🔍 **부분 일치 검색**: 대소문자 구분 없이 부분 문자열로 검색
 - 📊 **상세 정보 제공**: 한글 표기, 원어 표기, 언어명, 국명, 의미 표시
 - 📱 **반응형 디자인**: 모바일 및 데스크톱 환경 모두 지원
-- ✅ **테스트 커버리지**: 15개 단위 테스트로 안정성 보장
+- ✅ **테스트 커버리지**: 17개 단위 테스트로 안정성 보장
 
 ## 시작하기
 
@@ -64,48 +64,8 @@ npm run test:coverage  # 코드 커버리지 확인
 
 ## 프로젝트 구조
 
-```
-hanpyo/
-├── src/
-│   ├── main.tsx              # 애플리케이션 진입점
-│   ├── App.tsx               # 메인 App 컴포넌트
-│   ├── components/           # 재사용 가능한 컴포넌트
-│   │   ├── SearchInput.tsx
-│   │   └── ResultsTable.tsx
-│   ├── hooks/                # 커스텀 React 훅
-│   │   ├── useForeignWordData.ts
-│   │   └── useSearch.ts
-│   ├── utils/                # 유틸리티 함수
-│   │   ├── csvLoader.ts
-│   │   └── searchUtils.ts
-│   ├── types/                # TypeScript 타입 정의
-│   │   └── ForeignWord.ts
-│   ├── assets/               # 정적 자산 (CSV 데이터 포함)
-│   └── test/                 # 테스트 설정
-├── .github/
-│   └── workflows/
-│       └── deploy.yml        # GitHub Actions 워크플로우
-├── public/                   # 공개 정적 파일
-├── index.html                # HTML 진입점
-├── vite.config.ts            # Vite 설정
-├── tsconfig.json             # TypeScript 설정
-└── package.json              # 프로젝트 의존성
-```
+자세한 프로젝트 구조 및 아키텍처 설계는 [CLAUDE.md](./CLAUDE.md)를 참고하세요.
 
-## 아키텍처
-
-### 컴포넌트 구조
-- **App**: 메인 컨테이너 컴포넌트
-- **SearchInput**: 검색 입력 및 결과 개수 표시
-- **ResultsTable**: 검색 결과 테이블
-
-### 커스텀 훅
-- **useForeignWordData**: CSV 데이터 로딩 및 상태 관리
-- **useSearch**: 검색 쿼리 상태 및 필터링 로직
-
-### 유틸리티
-- **csvLoader**: CSV 파일 로드 및 파싱
-- **searchUtils**: 검색 필터링 로직 (테스트 가능)
 
 ## 배포
 
@@ -117,3 +77,6 @@ hanpyo/
 
 배포된 사이트: https://jiyongjung0.github.io/hanpyo/
 
+## 문의
+
+GitHub issue나 `bwhite8129 @ gmail.com`로 연락 부탁드립니다.

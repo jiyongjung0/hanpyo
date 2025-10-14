@@ -60,8 +60,8 @@ src/
 │   └── useSearch.ts            # 검색 로직 훅
 ├── utils/                      # 유틸리티 함수
 │   ├── csvLoader.ts            # CSV 파일 로드 및 파싱
-│   ├── searchUtils.ts          # 검색 필터링 로직
-│   └── searchUtils.test.ts     # searchUtils 테스트
+│   ├── search.ts               # 검색 필터링 로직
+│   └── search.test.ts          # search 테스트
 ├── types/                      # TypeScript 타입 정의
 │   └── ForeignWord.ts          # CSV 데이터 타입
 ├── assets/                     # 정적 자산
@@ -86,7 +86,7 @@ src/
 
 3. **유틸리티 (Utility Layer)**
    - `csvLoader`: CSV 파일 로드 및 파싱
-   - `searchUtils`: 순수 함수로 구현된 검색 필터링 로직
+   - `search`: 순수 함수로 구현된 검색 필터링 로직
    - 테스트 가능한 순수 함수로 설계
 
 ### 테스트 전략
@@ -94,7 +94,7 @@ src/
 - **단위 테스트**: 유틸리티 함수 및 컴포넌트 테스트
 - **Vitest**: 빠른 테스트 실행 환경
 - **React Testing Library**: 사용자 중심 컴포넌트 테스트
-- **총 15개 테스트 케이스** (모두 통과)
+- **총 17개 테스트 케이스** (모두 통과)
 
 ## TypeScript 설정
 
