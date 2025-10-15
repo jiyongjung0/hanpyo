@@ -14,6 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **관련도 순 검색**: 완전일치 → 단어 단위 완전일치 → 전체 시작 → 단어 경계 시작 → 전체 끝 → 단어 경계 끝 → 중간 포함 순으로 정렬
 - **단어 경계 매칭**: "Jerome Powell" 검색 시 "Powell"이 "Powellson"보다 우선
 - **실시간 검색**: 대소문자 구분 없이 원어 표기 검색
+- **검색어 하이라이팅**: 검색 결과의 원어 표기에서 매칭된 부분을 녹색으로 강조 표시
 - CSV 데이터 파싱 및 필터링 (PapaParse 사용)
 - 검색 결과 테이블 표시 (구분, 한글 표기, 원어 표기, 언어명, 국명, 의미)
 - 데이터 출처 및 업데이트 날짜 표시
@@ -67,7 +68,9 @@ src/
 ├── utils/                      # 유틸리티 함수
 │   ├── csvLoader.ts            # CSV 파일 로드 및 파싱
 │   ├── search.ts               # 검색 필터링 로직
-│   └── search.test.ts          # search 테스트
+│   ├── search.test.ts          # search 테스트
+│   ├── highlight.tsx           # 검색어 하이라이팅 유틸리티
+│   └── highlight.test.tsx      # highlight 테스트
 ├── types/                      # TypeScript 타입 정의
 │   └── ForeignWord.ts          # CSV 데이터 타입
 ├── assets/                     # 정적 자산
@@ -93,6 +96,7 @@ src/
 3. **유틸리티 (Utility Layer)**
    - `csvLoader`: CSV 파일 로드 및 파싱
    - `search`: 순수 함수로 구현된 검색 필터링 로직
+   - `highlight`: 검색어 하이라이팅 로직 (정규식 기반 텍스트 분리 및 JSX 변환)
    - 테스트 가능한 순수 함수로 설계
 
 ### 검색 알고리즘
@@ -112,17 +116,39 @@ src/
 - 정규식 재사용으로 불필요한 생성 제거
 - 조기 종료로 불필요한 검사 생략
 
+### 하이라이팅 구현
+
+`highlightText` 함수는 검색어와 일치하는 텍스트 부분을 `<strong>` 태그로 감싸서 반환합니다:
+
+**핵심 로직**:
+1. **특수문자 이스케이프**: 정규식에서 사용되는 특수문자(`.*+?^${}()|[]\` 등)를 이스케이프 처리
+2. **정규식 생성**: `(${escapedQuery})` - 괄호로 캡처 그룹을 만들어 `split()`이 매칭된 부분도 반환하도록 함
+3. **텍스트 분리**: `text.split(regex)`로 매칭된 부분과 그렇지 않은 부분을 배열로 분리
+4. **JSX 변환**: 각 부분을 순회하며 매칭된 부분은 `<strong>` 태그로, 그렇지 않은 부분은 그대로 반환
+
+**예시**:
+```typescript
+highlightText('Jerome Powell', 'powell')
+// 결과: ['Jerome ', <strong key={1}>Powell</strong>]
+```
+
+**주의사항**:
+- `.tsx` 확장자 필요 (JSX 문법 사용)
+- `import type { ReactNode }` 형태로 타입 import (verbatimModuleSyntax 설정 준수)
+- 각 요소에 고유한 `key` prop 할당 필요
+
 ### 테스트 전략
 
 - **단위 테스트**: 유틸리티 함수 및 컴포넌트 테스트
 - **Vitest**: 빠른 테스트 실행 환경
 - **React Testing Library**: 사용자 중심 컴포넌트 테스트
-- **총 38개 테스트 케이스** (모두 통과)
+- **총 44개 테스트 케이스** (모두 통과)
   - 검색어 유효성 검증: 8개
   - 기본 검색 기능: 7개
   - 관련도 순 정렬: 3개
   - 단어 경계 매칭: 3개
-  - 컴포넌트 테스트: 17개
+  - 하이라이팅: 8개
+  - 컴포넌트 테스트: 15개
 
 ## TypeScript 설정
 
