@@ -140,6 +140,7 @@
   width: 100%;
   border-collapse: collapse;
   background: white;
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
 .results-table thead {
@@ -176,9 +177,12 @@
 }
 
 .original-text {
-  font-family: system-ui, -apple-system, sans-serif;
-  color: #16a34a;
   font-weight: 500;
+}
+
+.original-text strong {
+  font-weight: 700;
+  color: #16a34a;
 }
 
 .meaning-text {

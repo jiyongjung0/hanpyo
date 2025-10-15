@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import type { ForeignWordEntry } from '../types/ForeignWord'
 import { isValidSearchQuery } from '../utils/search'
+import { highlightText } from '../utils/highlight'
 
 interface ResultsTableProps {
   data: ForeignWordEntry[]
@@ -70,7 +71,7 @@ export const ResultsTable = ({ data, query }: ResultsTableProps) => {
           <tbody>
             {data.map((entry, index) => (
               <tr key={`${entry['원어 표기']}-${index}`}>
-                <td data-label="원어 표기" className="original-text">{entry['원어 표기']}</td>
+                <td data-label="원어 표기" className="original-text">{highlightText(entry['원어 표기'], query)}</td>
                 <td data-label="한글 표기" className="korean-text">{entry['한글 표기']}</td>
                 <td data-label="구분">{entry.구분}</td>
                 <td data-label="언어명">{entry.언어명}</td>
