@@ -23,9 +23,10 @@ describe('ResultsTable', () => {
     },
   ]
 
-  it('영어 알파벳 1글자일 때 "영어는 두 글자 이상 입력해주세요" 메시지를 표시한다', () => {
+  it('영어 알파벳 1글자일 때 "영어는 두 글자 이상 입력해주세요" 메시지를 표시한다', async () => {
     render(<ResultsTable data={[]} query="a" />)
-    expect(screen.getByText('영어는 두 글자 이상 입력해주세요.')).toBeInTheDocument()
+    const message = await screen.findByText('영어는 두 글자 이상 입력해주세요.', {}, { timeout: 2000 })
+    expect(message).toBeInTheDocument()
   })
 
   it('검색어가 2글자 이상이고 빈 데이터일 때 "검색 결과가 없습니다" 메시지를 표시한다', () => {

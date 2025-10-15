@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import type { ForeignWordEntry } from '../types/ForeignWord'
 import { isValidSearchQuery } from '../utils/search'
 
@@ -7,13 +8,32 @@ interface ResultsTableProps {
 }
 
 export const ResultsTable = ({ data, query }: ResultsTableProps) => {
+  const [showInvalidMessage, setShowInvalidMessage] = useState(false)
+
+  // 검색어가 유효하지 않을 때 - 1초 딜레이
+  const isInvalid = query.trim() && !isValidSearchQuery(query)
+
+  useEffect(() => {
+    if (isInvalid) {
+      const timer = setTimeout(() => {
+        setShowInvalidMessage(true)
+      }, 1000)
+      return () => clearTimeout(timer)
+    } else {
+      setShowInvalidMessage(false)
+    }
+  }, [isInvalid])
+
   // 검색어가 없을 때
   if (!query.trim()) {
     return <div className="results-section empty"></div>
   }
 
-  // 검색어가 유효하지 않을 때
-  if (!isValidSearchQuery(query)) {
+  if (isInvalid && !showInvalidMessage) {
+    return <div className="results-section empty"></div>
+  }
+
+  if (isInvalid && showInvalidMessage) {
     return (
       <div className="results-section">
         <div className="no-results">영어는 두 글자 이상 입력해주세요.</div>
