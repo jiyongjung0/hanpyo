@@ -7,12 +7,27 @@ interface ResultsTableProps {
 }
 
 export const ResultsTable = ({ data, query }: ResultsTableProps) => {
-  if (!isValidSearchQuery(query)) {
-    return <div className="no-results">영어는 두 글자 이상 입력해주세요.</div>
+  // 검색어가 없을 때
+  if (!query.trim()) {
+    return <div className="results-section empty"></div>
   }
 
+  // 검색어가 유효하지 않을 때
+  if (!isValidSearchQuery(query)) {
+    return (
+      <div className="results-section">
+        <div className="no-results">영어는 두 글자 이상 입력해주세요.</div>
+      </div>
+    )
+  }
+
+  // 검색 결과가 없을 때
   if (data.length === 0) {
-    return <div className="no-results">검색 결과가 없습니다.</div>
+    return (
+      <div className="results-section">
+        <div className="no-results">검색 결과가 없습니다.</div>
+      </div>
+    )
   }
 
   return (
@@ -30,7 +45,7 @@ export const ResultsTable = ({ data, query }: ResultsTableProps) => {
         </thead>
         <tbody>
           {data.map((entry, index) => (
-            <tr key={`${entry.번호}-${index}`}>
+            <tr key={`${entry['원어 표기']}-${index}`}>
               <td>{entry.구분}</td>
               <td className="original-text">{entry['원어 표기']}</td>
               <td className="korean-text">{entry['한글 표기']}</td>

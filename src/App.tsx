@@ -29,7 +29,6 @@ function App() {
     <div className="app-container">
       <header className="app-header">
         <h1>외래어 표기 용례 찾기</h1>
-        <p className="subtitle">원어 표기를 입력하세요.</p>
       </header>
 
       <SearchInput
@@ -38,7 +37,7 @@ function App() {
         resultCount={filteredData.length}
       />
 
-      {searchQuery && <ResultsTable data={filteredData} query={searchQuery} />}
+      <ResultsTable data={filteredData} query={searchQuery} />
 
       <p className="data-source">
         데이터 출처:{' '}

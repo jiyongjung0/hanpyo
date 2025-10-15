@@ -1,7 +1,11 @@
 .app-container {
-  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
   padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .app-header {
@@ -16,12 +20,13 @@
 }
 
 .subtitle {
-  color: #646cff;
+  color: #16a34a;
   font-size: 1.1rem;
 }
 
 .search-section {
   margin-bottom: 2rem;
+  width: 100%;
 }
 
 .search-input-wrapper {
@@ -42,7 +47,7 @@
 
 .search-input:focus {
   outline: none;
-  border-color: #646cff;
+  border-color: #16a34a;
 }
 
 .clear-button {
@@ -68,7 +73,7 @@
 }
 
 .clear-button:focus {
-  outline: 2px solid #646cff;
+  outline: 2px solid #16a34a;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -76,7 +81,7 @@
 .result-count {
   margin-top: 1rem;
   font-size: 0.95rem;
-  color: #646cff;
+  color: #16a34a;
   font-weight: 500;
 }
 
@@ -88,19 +93,30 @@
 }
 
 .data-source a {
-  color: #16a34a;
-  text-decoration: none;
+  color: #0066cc;
+  text-decoration: underline;
   font-weight: 500;
 }
 
 .data-source a:hover {
-  text-decoration: underline;
+  color: #0052a3;
 }
 
 .results-section {
+  width: 100%;
   overflow-x: auto;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: white;
+  margin-bottom: 2rem;
+  box-sizing: border-box;
+}
+
+.results-section.empty {
+  box-shadow: none;
+  background: transparent;
+  height: 0;
+  margin-bottom: 0;
 }
 
 .results-table {
@@ -110,7 +126,7 @@
 }
 
 .results-table thead {
-  background: #646cff;
+  background: #16a34a;
   color: white;
   position: sticky;
   top: 0;
@@ -143,8 +159,8 @@
 }
 
 .original-text {
-  font-family: 'Courier New', monospace;
-  color: #646cff;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #16a34a;
   font-weight: 500;
 }
 
@@ -160,10 +176,14 @@
   text-align: center;
   padding: 3rem;
   font-size: 1.2rem;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loading {
-  color: #646cff;
+  color: #16a34a;
 }
 
 .error {
