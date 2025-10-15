@@ -122,7 +122,6 @@
 
 .results-section {
   width: 100%;
-  overflow-x: auto;
   margin-bottom: 2rem;
   box-sizing: border-box;
 }
@@ -132,12 +131,15 @@
   margin-bottom: 0;
 }
 
+.table-wrapper {
+  overflow-x: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .results-table {
   width: 100%;
   border-collapse: collapse;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .results-table thead {
@@ -212,6 +214,7 @@
 @media (max-width: 768px) {
   .app-container {
     padding: 1rem;
+    overflow-x: hidden;
   }
 
   .app-header h1 {
@@ -222,17 +225,29 @@
     font-size: 1rem;
   }
 
+  .table-wrapper {
+    overflow-x: visible;
+  }
+
   .results-table {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 
   .results-table th,
   .results-table td {
-    padding: 0.6rem;
+    padding: 0.5rem 0.4rem;
+  }
+
+  .original-text {
+    font-size: 0.85rem;
+  }
+
+  .korean-text {
+    font-size: 0.9rem;
   }
 
   .meaning-text {
-    max-width: 200px;
+    max-width: 100%;
     font-size: 0.85rem;
   }
 }
