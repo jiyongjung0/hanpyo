@@ -14,7 +14,7 @@ export function highlightText(text: string, query: string): ReactNode {
   // 정규식 특수 문자를 escape
   const escapedQuery = query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
-  // 대소문자 구분 없이 매칭
+  // 대소문자 구분 없이 매칭. 괄호를 사용하여 매칭된 부분도 캡처하여 split()으로 반환.
   const regex = new RegExp(`(${escapedQuery})`, 'gi')
 
   const parts = text.split(regex)
