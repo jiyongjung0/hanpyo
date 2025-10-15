@@ -6,7 +6,6 @@ import type { ForeignWordEntry } from '../types/ForeignWord'
 describe('ResultsTable', () => {
   const mockData: ForeignWordEntry[] = [
     {
-      번호: '1',
       구분: '인명',
       '한글 표기': '하우스, 조시',
       '원어 표기': 'Josie Howse',
@@ -15,7 +14,6 @@ describe('ResultsTable', () => {
       의미: '오스트레일리아의 점자 연구자.',
     },
     {
-      번호: '2',
       구분: '인명',
       '한글 표기': '파월, 제롬',
       '원어 표기': 'Jerome Powell',

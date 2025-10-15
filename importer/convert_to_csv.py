@@ -20,7 +20,7 @@ wb = load_workbook(input_file, data_only=True)
 ws = wb.active  # 첫 번째 시트 사용
 
 # 제외할 패턴 (정규식)
-exclude_pattern = re.compile(r"(이표기|오표기|공개\s*여부|출전)")
+exclude_pattern = re.compile(r"(번호|이표기|오표기|공개\s*여부|출전)")
 
 # 헤더 행 추출
 headers = [cell.value for cell in next(ws.iter_rows(min_row=1, max_row=1))]

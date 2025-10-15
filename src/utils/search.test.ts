@@ -42,7 +42,6 @@ describe('search', () => {
   describe('filterByOriginalText', () => {
     const mockData: ForeignWordEntry[] = [
       {
-        번호: '1',
         구분: '인명',
         '한글 표기': '하우스, 조시',
         '원어 표기': 'Josie Howse',
@@ -51,7 +50,6 @@ describe('search', () => {
         의미: '오스트레일리아의 점자 연구자.',
       },
       {
-        번호: '2',
         구분: '인명',
         '한글 표기': '파월, 제롬',
         '원어 표기': 'Jerome Powell',
@@ -60,7 +58,6 @@ describe('search', () => {
         의미: '미국 금융인.',
       },
       {
-        번호: '3',
         구분: '일반 용어',
         '한글 표기': '테초 국제공항',
         '원어 표기': 'Techo',
@@ -113,7 +110,6 @@ describe('search', () => {
     describe('관련도 순 정렬', () => {
       const priorityTestData: ForeignWordEntry[] = [
         {
-          번호: '1',
           구분: '인명',
           '한글 표기': '포함 항목',
           '원어 표기': 'something tech here',
@@ -122,7 +118,6 @@ describe('search', () => {
           의미: 'tech가 중간에 포함',
         },
         {
-          번호: '2',
           구분: '인명',
           '한글 표기': '시작 항목',
           '원어 표기': 'tech world',
@@ -131,7 +126,6 @@ describe('search', () => {
           의미: 'tech로 시작',
         },
         {
-          번호: '3',
           구분: '인명',
           '한글 표기': '끝 항목',
           '원어 표기': 'high tech',
@@ -140,7 +134,6 @@ describe('search', () => {
           의미: 'tech로 끝남',
         },
         {
-          번호: '4',
           구분: '인명',
           '한글 표기': '완전일치 항목',
           '원어 표기': 'tech',
@@ -172,7 +165,6 @@ describe('search', () => {
       it('같은 우선순위 내에서는 원래 순서를 유지한다', () => {
         const sameTypeData: ForeignWordEntry[] = [
           {
-            번호: '1',
             구분: '인명',
             '한글 표기': '첫 번째',
             '원어 표기': 'tech first',
@@ -181,7 +173,6 @@ describe('search', () => {
             의미: 'tech로 시작1',
           },
           {
-            번호: '2',
             구분: '인명',
             '한글 표기': '두 번째',
             '원어 표기': 'tech second',
@@ -202,7 +193,6 @@ describe('search', () => {
     describe('단어 경계 매칭', () => {
       const wordBoundaryData: ForeignWordEntry[] = [
         {
-          번호: '1',
           구분: '인명',
           '한글 표기': '중간 포함',
           '원어 표기': 'Jerowell Smith',
@@ -211,7 +201,6 @@ describe('search', () => {
           의미: 'well이 단어 중간에 포함',
         },
         {
-          번호: '2',
           구분: '인명',
           '한글 표기': '단어 경계 시작',
           '원어 표기': 'George Well',
@@ -220,7 +209,6 @@ describe('search', () => {
           의미: 'well이 단어 경계에서 시작',
         },
         {
-          번호: '3',
           구분: '인명',
           '한글 표기': '단어 경계 끝',
           '원어 표기': 'Well Known',
@@ -229,7 +217,6 @@ describe('search', () => {
           의미: 'well이 단어 경계에서 끝남',
         },
         {
-          번호: '4',
           구분: '인명',
           '한글 표기': '전체 시작',
           '원어 표기': 'Wellington',
@@ -238,7 +225,6 @@ describe('search', () => {
           의미: 'well로 시작',
         },
         {
-          번호: '5',
           구분: '일반 용어',
           '한글 표기': '완전 일치',
           '원어 표기': 'well',
@@ -264,7 +250,6 @@ describe('search', () => {
       it('Powell 검색 시 "Jerome Powell"이 "Powellson"보다 우선한다', () => {
         const powellData: ForeignWordEntry[] = [
           {
-            번호: '1',
             구분: '인명',
             '한글 표기': '파월슨',
             '원어 표기': 'Powellson',
@@ -273,7 +258,6 @@ describe('search', () => {
             의미: 'Powell로 시작하는 성',
           },
           {
-            번호: '2',
             구분: '인명',
             '한글 표기': '파월, 제롬',
             '원어 표기': 'Jerome Powell',
