@@ -53,7 +53,7 @@ export const ResultsTable = ({ data, query }: ResultsTableProps) => {
   return (
     <div className="results-section">
       <div className="result-count">
-        검색 결과: {data.length}개
+        {data.length}건
       </div>
       <div className="table-wrapper">
         <table className="results-table">

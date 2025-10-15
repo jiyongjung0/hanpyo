@@ -36,7 +36,7 @@ describe('ResultsTable', () => {
 
   it('검색 결과 개수를 표시한다', () => {
     render(<ResultsTable data={mockData} query="test" />)
-    expect(screen.getByText('검색 결과: 2개')).toBeInTheDocument()
+    expect(screen.getByText('2건')).toBeInTheDocument()
   })
 
   it('테이블 헤더를 렌더링한다', () => {
