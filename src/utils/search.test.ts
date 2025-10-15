@@ -94,6 +94,7 @@ describe('search', () => {
     it('부분 일치로 검색한다', () => {
       const result = filterByOriginalText(mockData, 'ow')
       expect(result).toHaveLength(2)
+      // 두 항목 모두 포함 카테고리이므로 원래 순서 유지
       expect(result[0]['원어 표기']).toBe('Josie Howse')
       expect(result[1]['원어 표기']).toBe('Jerome Powell')
     })
@@ -107,6 +108,195 @@ describe('search', () => {
       const result = filterByOriginalText(mockData, 'Techo')
       expect(result).toHaveLength(1)
       expect(result[0]['한글 표기']).toBe('테초 국제공항')
+    })
+
+    describe('관련도 순 정렬', () => {
+      const priorityTestData: ForeignWordEntry[] = [
+        {
+          번호: '1',
+          구분: '인명',
+          '한글 표기': '포함 항목',
+          '원어 표기': 'something tech here',
+          국명: '미국',
+          언어명: '영어',
+          의미: 'tech가 중간에 포함',
+        },
+        {
+          번호: '2',
+          구분: '인명',
+          '한글 표기': '시작 항목',
+          '원어 표기': 'tech world',
+          국명: '미국',
+          언어명: '영어',
+          의미: 'tech로 시작',
+        },
+        {
+          번호: '3',
+          구분: '인명',
+          '한글 표기': '끝 항목',
+          '원어 표기': 'high tech',
+          국명: '미국',
+          언어명: '영어',
+          의미: 'tech로 끝남',
+        },
+        {
+          번호: '4',
+          구분: '인명',
+          '한글 표기': '완전일치 항목',
+          '원어 표기': 'tech',
+          국명: '미국',
+          언어명: '영어',
+          의미: 'tech 정확히 일치',
+        },
+      ]
+
+      it('완전일치 > 시작 > 끝 > 포함 순으로 정렬한다', () => {
+        const result = filterByOriginalText(priorityTestData, 'tech')
+        expect(result).toHaveLength(4)
+        expect(result[0]['원어 표기']).toBe('tech')                   // 완전일치
+        // 'something tech here'와 'tech world' 모두 단어 단위 완전 일치이므로 원래 순서 유지
+        expect(result[1]['원어 표기']).toBe('something tech here')    // 단어 단위 완전 일치
+        expect(result[2]['원어 표기']).toBe('tech world')             // 단어 단위 완전 일치 + 전체 시작
+        expect(result[3]['원어 표기']).toBe('high tech')              // 전체 끝
+      })
+
+      it('대소문자 무관하게 우선순위를 적용한다', () => {
+        const result = filterByOriginalText(priorityTestData, 'TECH')
+        expect(result).toHaveLength(4)
+        expect(result[0]['원어 표기']).toBe('tech')                   // 완전일치
+        expect(result[1]['원어 표기']).toBe('something tech here')    // 단어 단위 완전 일치
+        expect(result[2]['원어 표기']).toBe('tech world')             // 단어 단위 완전 일치 + 전체 시작
+        expect(result[3]['원어 표기']).toBe('high tech')              // 전체 끝
+      })
+
+      it('같은 우선순위 내에서는 원래 순서를 유지한다', () => {
+        const sameTypeData: ForeignWordEntry[] = [
+          {
+            번호: '1',
+            구분: '인명',
+            '한글 표기': '첫 번째',
+            '원어 표기': 'tech first',
+            국명: '미국',
+            언어명: '영어',
+            의미: 'tech로 시작1',
+          },
+          {
+            번호: '2',
+            구분: '인명',
+            '한글 표기': '두 번째',
+            '원어 표기': 'tech second',
+            국명: '미국',
+            언어명: '영어',
+            의미: 'tech로 시작2',
+          },
+        ]
+
+        const result = filterByOriginalText(sameTypeData, 'tech')
+        expect(result).toHaveLength(2)
+        // 두 항목 모두 'tech'로 시작하므로 원래 순서 유지
+        expect(result[0]['원어 표기']).toBe('tech first')
+        expect(result[1]['원어 표기']).toBe('tech second')
+      })
+    })
+
+    describe('단어 경계 매칭', () => {
+      const wordBoundaryData: ForeignWordEntry[] = [
+        {
+          번호: '1',
+          구분: '인명',
+          '한글 표기': '중간 포함',
+          '원어 표기': 'Jerowell Smith',
+          국명: '미국',
+          언어명: '영어',
+          의미: 'well이 단어 중간에 포함',
+        },
+        {
+          번호: '2',
+          구분: '인명',
+          '한글 표기': '단어 경계 시작',
+          '원어 표기': 'George Well',
+          국명: '미국',
+          언어명: '영어',
+          의미: 'well이 단어 경계에서 시작',
+        },
+        {
+          번호: '3',
+          구분: '인명',
+          '한글 표기': '단어 경계 끝',
+          '원어 표기': 'Well Known',
+          국명: '미국',
+          언어명: '영어',
+          의미: 'well이 단어 경계에서 끝남',
+        },
+        {
+          번호: '4',
+          구분: '인명',
+          '한글 표기': '전체 시작',
+          '원어 표기': 'Wellington',
+          국명: '영국',
+          언어명: '영어',
+          의미: 'well로 시작',
+        },
+        {
+          번호: '5',
+          구분: '일반 용어',
+          '한글 표기': '완전 일치',
+          '원어 표기': 'well',
+          국명: '미국',
+          언어명: '영어',
+          의미: 'well 그 자체',
+        },
+      ]
+
+      it('단어 경계 매칭을 고려하여 정렬한다', () => {
+        const result = filterByOriginalText(wordBoundaryData, 'well')
+        expect(result).toHaveLength(5)
+
+        // 우선순위: 완전일치 > 단어단위완전일치 > 전체시작 > 단어경계시작 > 나머지
+        expect(result[0]['원어 표기']).toBe('well')             // 완전 일치
+        // George Well과 Well Known은 모두 단어 단위 완전 일치이므로 원래 순서 유지
+        expect(result[1]['원어 표기']).toBe('George Well')      // 단어 단위 완전 일치 (2번 데이터)
+        expect(result[2]['원어 표기']).toBe('Well Known')       // 단어 단위 완전 일치 (3번 데이터)
+        expect(result[3]['원어 표기']).toBe('Wellington')       // 전체 시작
+        expect(result[4]['원어 표기']).toBe('Jerowell Smith')   // 중간 포함
+      })
+
+      it('Powell 검색 시 "Jerome Powell"이 "Powellson"보다 우선한다', () => {
+        const powellData: ForeignWordEntry[] = [
+          {
+            번호: '1',
+            구분: '인명',
+            '한글 표기': '파월슨',
+            '원어 표기': 'Powellson',
+            국명: '미국',
+            언어명: '영어',
+            의미: 'Powell로 시작하는 성',
+          },
+          {
+            번호: '2',
+            구분: '인명',
+            '한글 표기': '파월, 제롬',
+            '원어 표기': 'Jerome Powell',
+            국명: '미국',
+            언어명: '영어',
+            의미: '미국 금융인',
+          },
+        ]
+
+        const result = filterByOriginalText(powellData, 'Powell')
+        expect(result).toHaveLength(2)
+        expect(result[0]['원어 표기']).toBe('Jerome Powell') // 단어 단위 완전 일치
+        expect(result[1]['원어 표기']).toBe('Powellson')     // 전체 시작
+      })
+
+      it('대소문자 무관하게 단어 경계를 인식한다', () => {
+        const result = filterByOriginalText(wordBoundaryData, 'WELL')
+        expect(result).toHaveLength(5)
+        expect(result[0]['원어 표기']).toBe('well')
+        expect(result[1]['원어 표기']).toBe('George Well')   // 단어 단위 완전 일치
+        expect(result[2]['원어 표기']).toBe('Well Known')    // 단어 단위 완전 일치
+        expect(result[3]['원어 표기']).toBe('Wellington')
+      })
     })
   })
 })

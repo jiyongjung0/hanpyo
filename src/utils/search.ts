@@ -22,7 +22,68 @@ export const filterByOriginalText = (
   }
 
   const normalizedQuery = query.trim().toLowerCase()
-  return data.filter((entry) =>
-    entry['원어 표기']?.toLowerCase().includes(normalizedQuery)
-  )
+
+  // 정규식 특수 문자를 escape (한 번만 수행)
+  const escapedQuery = normalizedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const wordBoundaryStart = new RegExp(`\\b${escapedQuery}`)
+  const wordBoundaryEnd = new RegExp(`${escapedQuery}\\b`)
+
+  // 우선순위별 그룹
+  const exactMatch: ForeignWordEntry[] = []
+  const wordExactMatch: ForeignWordEntry[] = []
+  const startsWithQuery: ForeignWordEntry[] = []
+  const wordBoundaryStartMatch: ForeignWordEntry[] = []
+  const endsWithQuery: ForeignWordEntry[] = []
+  const wordPartialOrBoundaryEnd: ForeignWordEntry[] = []
+  const contains: ForeignWordEntry[] = []
+
+  // 한 번의 순회로 모든 항목을 분류
+  data.forEach((entry) => {
+    const text = entry['원어 표기']?.toLowerCase() || ''
+
+    // 검색어를 포함하지 않으면 스킵
+    if (!text.includes(normalizedQuery)) {
+      return
+    }
+
+    // 완전 일치
+    if (text === normalizedQuery) {
+      exactMatch.push(entry)
+    }
+    // 단어 단위 완전 일치
+    else if (text.split(/\s+/).includes(normalizedQuery)) {
+      wordExactMatch.push(entry)
+    }
+    // 전체 시작
+    else if (text.startsWith(normalizedQuery)) {
+      startsWithQuery.push(entry)
+    }
+    // 단어 경계에서 시작
+    else if (wordBoundaryStart.test(text)) {
+      wordBoundaryStartMatch.push(entry)
+    }
+    // 전체 끝
+    else if (text.endsWith(normalizedQuery)) {
+      endsWithQuery.push(entry)
+    }
+    // 단어 경계 끝
+    else if (wordBoundaryEnd.test(text)) {
+      wordPartialOrBoundaryEnd.push(entry)
+    }
+    // 중간 포함
+    else {
+      contains.push(entry)
+    }
+  })
+
+  // 우선순위 순서대로 병합
+  return [
+    ...exactMatch,
+    ...wordExactMatch,
+    ...startsWithQuery,
+    ...wordBoundaryStartMatch,
+    ...endsWithQuery,
+    ...wordPartialOrBoundaryEnd,
+    ...contains,
+  ]
 }
