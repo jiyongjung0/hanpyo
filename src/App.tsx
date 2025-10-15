@@ -28,8 +28,8 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <h1>외래어 표기 검색</h1>
-        <p className="subtitle">원어 표기를 검색하세요</p>
+        <h1>외래어 표기 용례 찾기</h1>
+        <p className="subtitle">원어 표기를 입력하세요.</p>
       </header>
 
       <SearchInput

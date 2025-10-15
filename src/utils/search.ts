@@ -5,10 +5,7 @@ export const isValidSearchQuery = (query: string): boolean => {
 
   if (trimmedQuery.length === 0) {
     return false
-  }
-
-  // 2글자 이상이면 무조건 유효
-  if (trimmedQuery.length >= 2) {
+  } else if (trimmedQuery.length >= 2) { // 2글자 이상이면 무조건 유효
     return true
   }
 
