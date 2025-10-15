@@ -3,10 +3,9 @@ import { useEffect, useRef } from 'react'
 interface SearchInputProps {
   value: string
   onChange: (value: string) => void
-  resultCount?: number
 }
 
-export const SearchInput = ({ value, onChange, resultCount }: SearchInputProps) => {
+export const SearchInput = ({ value, onChange }: SearchInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -51,11 +50,6 @@ export const SearchInput = ({ value, onChange, resultCount }: SearchInputProps) 
           </button>
         )}
       </div>
-      {value && resultCount !== undefined && (
-        <div className="result-count">
-          검색 결과: {resultCount}개
-        </div>
-      )}
     </div>
   )
 }

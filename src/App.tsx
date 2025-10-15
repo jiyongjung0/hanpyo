@@ -34,7 +34,6 @@ function App() {
       <SearchInput
         value={searchQuery}
         onChange={setSearchQuery}
-        resultCount={filteredData.length}
       />
 
       <ResultsTable data={filteredData} query={searchQuery} />

@@ -23,24 +23,6 @@ describe('SearchInput', () => {
     expect(handleChange).toHaveBeenCalled()
   })
 
-  it('검색어가 있고 resultCount가 제공되면 결과 개수를 표시한다', () => {
-    render(<SearchInput value="test" onChange={vi.fn()} resultCount={5} />)
-
-    expect(screen.getByText(/검색 결과: 5개/)).toBeInTheDocument()
-  })
-
-  it('검색어가 없으면 결과 개수를 표시하지 않는다', () => {
-    render(<SearchInput value="" onChange={vi.fn()} resultCount={5} />)
-
-    expect(screen.queryByText(/검색 결과/)).not.toBeInTheDocument()
-  })
-
-  it('resultCount가 제공되지 않으면 결과 개수를 표시하지 않는다', () => {
-    render(<SearchInput value="test" onChange={vi.fn()} />)
-
-    expect(screen.queryByText(/검색 결과/)).not.toBeInTheDocument()
-  })
-
   describe('UX 기능', () => {
     it('컴포넌트가 마운트되면 입력창에 자동으로 포커스된다', () => {
       render(<SearchInput value="" onChange={vi.fn()} />)
