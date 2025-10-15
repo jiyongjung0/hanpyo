@@ -9,14 +9,16 @@
 }
 
 .app-header {
-  text-align: center;
-  margin-bottom: 2rem;
+  text-align: left;
+  margin-bottom: 1rem;
 }
 
 .app-header h1 {
   font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-  color: #213547;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #16a34a;
+  font-weight: 700;
 }
 
 .subtitle {
@@ -25,7 +27,7 @@
 }
 
 .search-section {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   width: 100%;
 }
 
@@ -39,7 +41,7 @@
   padding: 1rem;
   padding-right: 3rem;
   font-size: 1.1rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #16a34a;
   border-radius: 8px;
   box-sizing: border-box;
   transition: border-color 0.3s;
@@ -47,7 +49,6 @@
 
 .search-input:focus {
   outline: none;
-  border-color: #16a34a;
 }
 
 .clear-button {
@@ -79,19 +80,20 @@
 }
 
 .result-count {
-  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
   font-size: 0.95rem;
   color: #16a34a;
   font-weight: 500;
-  background: #f0fdf4;
-  border-bottom: 1px solid #bbf7d0;
+  text-align: right;
 }
 
 .data-source {
   text-align: center;
-  margin: 1rem 0 2rem;
-  font-size: 0.9rem;
+  margin: 1rem 0 0.5rem;
+  padding-top: 1rem;
+  font-size: 0.7rem;
   color: #666;
+  border-top: 1px solid #e0e0e0;
 }
 
 .data-source a {
@@ -104,19 +106,28 @@
   color: #0052a3;
 }
 
+.github-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  color: #666;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+}
+
+.github-link:hover {
+  opacity: 0.8;
+}
+
 .results-section {
   width: 100%;
   overflow-x: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background: white;
   margin-bottom: 2rem;
   box-sizing: border-box;
 }
 
 .results-section.empty {
-  box-shadow: none;
-  background: transparent;
   height: 0;
   margin-bottom: 0;
 }
@@ -125,6 +136,8 @@
   width: 100%;
   border-collapse: collapse;
   background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .results-table thead {
