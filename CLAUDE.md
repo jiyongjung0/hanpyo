@@ -186,14 +186,7 @@ highlightText('Jerome Powell', 'powell')
 
 ### 사전 데이터 업데이트
 
-**자동 업데이트 (GitHub Actions):**
-- 매일 한국시간 새벽 1시(UTC 16시)에 자동 실행
-- `.github/workflows/update-dictionary.yml` 워크플로우가 사전 데이터 갱신
-- 변경 사항이 있으면 자동으로 커밋 및 푸시
-- 푸시로 인해 배포 워크플로우가 자동 트리거되어 사이트 업데이트
-
-**수동 업데이트:**
-로컬에서 배치 스크립트를 직접 실행할 수도 있습니다:
+로컬에서 배치 스크립트를 실행하여 사전 데이터를 업데이트할 수 있습니다:
 
 ```bash
 ./scripts/update-dictionary.sh
@@ -201,10 +194,12 @@ highlightText('Jerome Powell', 'powell')
 
 **스크립트 동작:**
 1. 국립국어원에서 최신 외래어 표기 사전 엑셀 파일 다운로드
-2. Python `openpyxl` 모듈 설치
+2. Python 가상환경(`importer/.venv`) 활성화
 3. `importer/convert_to_csv.py`를 사용하여 CSV로 변환
 4. `src/dataUpdateDate.ts`에 업데이트 날짜 기록
 5. 임시 파일 자동 정리
+
+**참고**: 국립국어원 서버가 해외 IP에서의 접근을 제한하므로 GitHub Actions를 통한 자동 업데이트는 불가능합니다.
 
 ## 배포
 
