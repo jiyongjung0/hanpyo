@@ -78,6 +78,12 @@ src/
 │   └── data.csv                # 외래어 표기 데이터 (2025년 10월 기준 약 8.4MB)
 └── test/                       # 테스트 설정
     └── setup.ts                # Vitest 설정
+
+scripts/
+└── update-dictionary.sh        # 사전 업데이트 배치 스크립트
+
+importer/
+└── convert_to_csv.py           # 엑셀 파일을 CSV로 변환하는 Python 스크립트
 ```
 
 ## 아키텍처 설계
@@ -177,6 +183,22 @@ highlightText('Jerome Powell', 'powell')
 - 빌드 시 `dist/assets/` 폴더에 포함됨
 - 예: `import csvFile from '../assets/data.csv?url'`
 - 파일명을 `data.csv`로 고정하여 업데이트 시 코드 수정 불필요
+
+### 사전 데이터 업데이트
+배치 스크립트(`scripts/update-dictionary.sh`)를 사용하여 국립국어원 사전 데이터를 자동으로 업데이트할 수 있습니다:
+
+```bash
+./scripts/update-dictionary.sh
+```
+
+**스크립트 동작:**
+1. 국립국어원에서 최신 외래어 표기 사전 엑셀 파일 다운로드
+2. Python `openpyxl` 모듈 설치
+3. `importer/convert_to_csv.py`를 사용하여 CSV로 변환
+4. `src/dataUpdateDate.ts`에 업데이트 날짜 기록
+5. 임시 파일 자동 정리
+
+이 스크립트는 GitHub Actions 워크플로우에서 주기적으로 실행되어 사전 데이터를 자동으로 최신 상태로 유지합니다.
 
 ## 배포
 
