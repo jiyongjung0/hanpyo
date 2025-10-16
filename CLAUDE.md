@@ -185,7 +185,15 @@ highlightText('Jerome Powell', 'powell')
 - 파일명을 `data.csv`로 고정하여 업데이트 시 코드 수정 불필요
 
 ### 사전 데이터 업데이트
-배치 스크립트(`scripts/update-dictionary.sh`)를 사용하여 국립국어원 사전 데이터를 자동으로 업데이트할 수 있습니다:
+
+**자동 업데이트 (GitHub Actions):**
+- 매일 한국시간 새벽 1시(UTC 16시)에 자동 실행
+- `.github/workflows/update-dictionary.yml` 워크플로우가 사전 데이터 갱신
+- 변경 사항이 있으면 자동으로 커밋 및 푸시
+- 푸시로 인해 배포 워크플로우가 자동 트리거되어 사이트 업데이트
+
+**수동 업데이트:**
+로컬에서 배치 스크립트를 직접 실행할 수도 있습니다:
 
 ```bash
 ./scripts/update-dictionary.sh
@@ -197,8 +205,6 @@ highlightText('Jerome Powell', 'powell')
 3. `importer/convert_to_csv.py`를 사용하여 CSV로 변환
 4. `src/dataUpdateDate.ts`에 업데이트 날짜 기록
 5. 임시 파일 자동 정리
-
-이 스크립트는 GitHub Actions 워크플로우에서 주기적으로 실행되어 사전 데이터를 자동으로 최신 상태로 유지합니다.
 
 ## 배포
 
