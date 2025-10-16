@@ -45,6 +45,8 @@
   border-radius: 8px;
   box-sizing: border-box;
   transition: border-color 0.3s;
+  background-color: #ffffff;
+  color: #213547;
 }
 
 .search-input:focus {
@@ -139,13 +141,14 @@
 .results-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background-color: #ffffff;
+  color: #213547;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
 .results-table thead {
-  background: #16a34a;
-  color: white;
+  background-color: #16a34a;
+  color: #ffffff;
   position: sticky;
   top: 0;
 }
@@ -160,6 +163,10 @@
 .results-table tbody tr {
   border-bottom: 1px solid #e0e0e0;
   transition: background-color 0.2s;
+}
+
+.results-table tbody tr {
+  background-color: #ffffff;
 }
 
 .results-table tbody tr:hover {
@@ -178,6 +185,7 @@
 
 .original-text {
   font-weight: 500;
+  color: #213547;
 }
 
 .original-text strong {
@@ -213,6 +221,57 @@
 
 .no-results {
   color: #888;
+}
+
+@media (prefers-color-scheme: dark) {
+  .search-input {
+    background-color: #1a1a1a;
+    color: rgba(255, 255, 255, 0.87);
+    border-color: #16a34a;
+  }
+
+  .results-table {
+    background-color: #1a1a1a;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .results-table tbody tr {
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #333;
+  }
+
+  .results-table tbody tr:hover {
+    background-color: #2a2a2a;
+  }
+
+  .korean-text {
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .original-text {
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .meaning-text {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .data-source {
+    color: rgba(255, 255, 255, 0.6);
+    border-top: 1px solid #333;
+  }
+
+  .data-source a {
+    color: #4d9fff;
+  }
+
+  .data-source a:hover {
+    color: #6bb3ff;
+  }
+
+  .github-link {
+    color: rgba(255, 255, 255, 0.6);
+  }
 }
 
 @media (max-width: 768px) {
