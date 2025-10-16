@@ -1,3 +1,6 @@
+run-daily.sh
+cloud
+
 # Logs
 logs
 *.log
