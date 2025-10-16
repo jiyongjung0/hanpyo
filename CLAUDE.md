@@ -75,7 +75,7 @@ src/
 ├── types/                      # TypeScript 타입 정의
 │   └── ForeignWord.ts          # CSV 데이터 타입
 ├── assets/                     # 정적 자산
-│   └── 20251013.csv            # 외래어 표기 데이터 (약 8.8MB)
+│   └── data.csv                # 외래어 표기 데이터 (2025년 10월 기준 약 8.4MB)
 └── test/                       # 테스트 설정
     └── setup.ts                # Vitest 설정
 ```
@@ -175,7 +175,8 @@ highlightText('Jerome Powell', 'powell')
 ### CSV 파일 처리
 - CSV 파일은 `?url` 쿼리를 사용하여 import
 - 빌드 시 `dist/assets/` 폴더에 포함됨
-- 예: `import csvFile from '../assets/20251013.csv?url'`
+- 예: `import csvFile from '../assets/data.csv?url'`
+- 파일명을 `data.csv`로 고정하여 업데이트 시 코드 수정 불필요
 
 ## 배포
 
