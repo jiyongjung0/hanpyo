@@ -12,6 +12,29 @@ export const SearchInput = ({ value, onChange }: SearchInputProps) => {
     inputRef.current?.focus()
   }, [])
 
+  // 전역 키보드 이벤트: 입력창에 포커스가 없어도 일반 문자 입력 시 자동 포커스
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      // 이미 입력창에 포커스가 있으면 무시
+      if (document.activeElement === inputRef.current) {
+        return
+      }
+
+      // modifier 키와 함께 눌린 경우 무시 (Ctrl+C, Cmd+V 등)
+      if (e.ctrlKey || e.altKey || e.metaKey) {
+        return
+      }
+
+      // 입력 가능한 단일 문자인 경우에만 포커스 이동
+      if (e.key.length === 1) {
+        inputRef.current?.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleGlobalKeyDown)
+    return () => document.removeEventListener('keydown', handleGlobalKeyDown)
+  }, [])
+
   const handleClear = () => {
     onChange('')
     inputRef.current?.focus()

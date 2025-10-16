@@ -84,5 +84,47 @@ describe('SearchInput', () => {
 
       expect(selectSpy).toHaveBeenCalled()
     })
+
+    it('포커스가 없는 상태에서 일반 문자를 입력하면 입력창에 포커스된다', () => {
+      render(<SearchInput value="" onChange={vi.fn()} />)
+      const input = screen.getByRole('textbox') as HTMLInputElement
+
+      // 포커스를 다른 곳으로 이동
+      input.blur()
+      expect(input).not.toHaveFocus()
+
+      // 일반 문자 키 입력
+      fireEvent.keyDown(document, { key: 'a' })
+
+      expect(input).toHaveFocus()
+    })
+
+    it('포커스가 없는 상태에서 modifier 키와 함께 누르면 포커스 이동하지 않는다', () => {
+      render(<SearchInput value="" onChange={vi.fn()} />)
+      const input = screen.getByRole('textbox') as HTMLInputElement
+
+      input.blur()
+      expect(input).not.toHaveFocus()
+
+      // Ctrl+C, Cmd+V 등
+      fireEvent.keyDown(document, { key: 'c', ctrlKey: true })
+      expect(input).not.toHaveFocus()
+
+      fireEvent.keyDown(document, { key: 'v', metaKey: true })
+      expect(input).not.toHaveFocus()
+    })
+
+    it('이미 포커스가 있는 상태에서는 전역 키 이벤트를 무시한다', () => {
+      render(<SearchInput value="" onChange={vi.fn()} />)
+      const input = screen.getByRole('textbox')
+
+      // 이미 포커스가 있음
+      expect(input).toHaveFocus()
+
+      // 전역 키 이벤트가 발생해도 정상 동작 (에러 없음)
+      fireEvent.keyDown(document, { key: 'a' })
+
+      expect(input).toHaveFocus()
+    })
   })
 })

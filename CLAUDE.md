@@ -15,6 +15,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **단어 경계 매칭**: "Jerome Powell" 검색 시 "Powell"이 "Powellson"보다 우선
 - **실시간 검색**: 대소문자 구분 없이 원어 표기 검색
 - **검색어 하이라이팅**: 검색 결과의 원어 표기에서 매칭된 부분을 녹색으로 강조 표시
+- **전역 키보드 입력**: 입력창에 포커스가 없어도 일반 문자 입력 시 자동으로 입력창에 포커스
 - CSV 데이터 파싱 및 필터링 (PapaParse 사용)
 - 검색 결과 테이블 표시 (구분, 한글 표기, 원어 표기, 언어명, 국명, 의미)
 - 데이터 출처 및 업데이트 날짜 표시
@@ -147,13 +148,13 @@ highlightText('Jerome Powell', 'powell')
 - **단위 테스트**: 유틸리티 함수 및 컴포넌트 테스트
 - **Vitest**: 빠른 테스트 실행 환경
 - **React Testing Library**: 사용자 중심 컴포넌트 테스트
-- **총 43개 테스트 케이스** (모두 통과)
+- **총 46개 테스트 케이스** (모두 통과)
   - 검색어 유효성 검증: 8개
   - 기본 검색 기능: 7개
   - 관련도 순 정렬: 2개
   - 단어 경계 매칭: 3개
   - 하이라이팅: 8개
-  - 컴포넌트 테스트: 15개
+  - 컴포넌트 테스트: 18개 (SearchInput 12개, ResultsTable 6개)
 
 ## TypeScript 설정
 
