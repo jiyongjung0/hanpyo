@@ -181,11 +181,15 @@
 .korean-text {
   font-weight: 600;
   color: #213547;
+  max-width: 30%;
+  overflow-wrap: break-word;
 }
 
 .original-text {
   font-weight: 500;
   color: #213547;
+  max-width: 30%;
+  overflow-wrap: break-word;
 }
 
 .original-text strong {
@@ -194,7 +198,6 @@
 }
 
 .meaning-text {
-  max-width: 400px;
   line-height: 1.5;
   color: #555;
 }
@@ -277,7 +280,6 @@
 @media (max-width: 768px) {
   .app-container {
     padding: 1rem;
-    overflow-x: hidden;
   }
 
   .app-header h1 {
@@ -286,10 +288,6 @@
 
   .search-input {
     font-size: 1rem;
-  }
-
-  .table-wrapper {
-    overflow-x: visible;
   }
 
   .results-table {
@@ -310,7 +308,6 @@
   }
 
   .meaning-text {
-    max-width: 100%;
     font-size: 0.85rem;
   }
 }
