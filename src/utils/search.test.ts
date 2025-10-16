@@ -147,46 +147,20 @@ describe('search', () => {
         const result = filterByOriginalText(priorityTestData, 'tech')
         expect(result).toHaveLength(4)
         expect(result[0]['원어 표기']).toBe('tech')                   // 완전일치
-        // 'something tech here'와 'tech world' 모두 단어 단위 완전 일치이므로 원래 순서 유지
-        expect(result[1]['원어 표기']).toBe('something tech here')    // 단어 단위 완전 일치
-        expect(result[2]['원어 표기']).toBe('tech world')             // 단어 단위 완전 일치 + 전체 시작
-        expect(result[3]['원어 표기']).toBe('high tech')              // 전체 끝
+        // 'tech world'와 'high tech'는 단어 단위 완전 일치, 길이 순으로 정렬
+        expect(result[1]['원어 표기']).toBe('high tech')              // 단어 단위 완전 일치 (9글자)
+        expect(result[2]['원어 표기']).toBe('tech world')             // 단어 단위 완전 일치 (10글자)
+        expect(result[3]['원어 표기']).toBe('something tech here')    // 단어 단위 완전 일치 (19글자)
       })
 
       it('대소문자 무관하게 우선순위를 적용한다', () => {
         const result = filterByOriginalText(priorityTestData, 'TECH')
         expect(result).toHaveLength(4)
         expect(result[0]['원어 표기']).toBe('tech')                   // 완전일치
-        expect(result[1]['원어 표기']).toBe('something tech here')    // 단어 단위 완전 일치
-        expect(result[2]['원어 표기']).toBe('tech world')             // 단어 단위 완전 일치 + 전체 시작
-        expect(result[3]['원어 표기']).toBe('high tech')              // 전체 끝
-      })
-
-      it('같은 우선순위 내에서는 원래 순서를 유지한다', () => {
-        const sameTypeData: ForeignWordEntry[] = [
-          {
-            구분: '인명',
-            '한글 표기': '첫 번째',
-            '원어 표기': 'tech first',
-            국명: '미국',
-            언어명: '영어',
-            의미: 'tech로 시작1',
-          },
-          {
-            구분: '인명',
-            '한글 표기': '두 번째',
-            '원어 표기': 'tech second',
-            국명: '미국',
-            언어명: '영어',
-            의미: 'tech로 시작2',
-          },
-        ]
-
-        const result = filterByOriginalText(sameTypeData, 'tech')
-        expect(result).toHaveLength(2)
-        // 두 항목 모두 'tech'로 시작하므로 원래 순서 유지
-        expect(result[0]['원어 표기']).toBe('tech first')
-        expect(result[1]['원어 표기']).toBe('tech second')
+        // 길이 순으로 정렬
+        expect(result[1]['원어 표기']).toBe('high tech')              // 단어 단위 완전 일치 (9글자)
+        expect(result[2]['원어 표기']).toBe('tech world')             // 단어 단위 완전 일치 (10글자)
+        expect(result[3]['원어 표기']).toBe('something tech here')    // 단어 단위 완전 일치 (19글자)
       })
     })
 
@@ -240,9 +214,9 @@ describe('search', () => {
 
         // 우선순위: 완전일치 > 단어단위완전일치 > 전체시작 > 단어경계시작 > 나머지
         expect(result[0]['원어 표기']).toBe('well')             // 완전 일치
-        // George Well과 Well Known은 모두 단어 단위 완전 일치이므로 원래 순서 유지
-        expect(result[1]['원어 표기']).toBe('George Well')      // 단어 단위 완전 일치 (2번 데이터)
-        expect(result[2]['원어 표기']).toBe('Well Known')       // 단어 단위 완전 일치 (3번 데이터)
+        // 단어 단위 완전 일치는 길이 순으로 정렬
+        expect(result[1]['원어 표기']).toBe('Well Known')       // 단어 단위 완전 일치 (10글자)
+        expect(result[2]['원어 표기']).toBe('George Well')      // 단어 단위 완전 일치 (11글자)
         expect(result[3]['원어 표기']).toBe('Wellington')       // 전체 시작
         expect(result[4]['원어 표기']).toBe('Jerowell Smith')   // 중간 포함
       })
@@ -277,8 +251,9 @@ describe('search', () => {
         const result = filterByOriginalText(wordBoundaryData, 'WELL')
         expect(result).toHaveLength(5)
         expect(result[0]['원어 표기']).toBe('well')
-        expect(result[1]['원어 표기']).toBe('George Well')   // 단어 단위 완전 일치
-        expect(result[2]['원어 표기']).toBe('Well Known')    // 단어 단위 완전 일치
+        // 길이 순으로 정렬
+        expect(result[1]['원어 표기']).toBe('Well Known')    // 단어 단위 완전 일치 (10글자)
+        expect(result[2]['원어 표기']).toBe('George Well')   // 단어 단위 완전 일치 (11글자)
         expect(result[3]['원어 표기']).toBe('Wellington')
       })
     })

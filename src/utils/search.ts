@@ -76,14 +76,18 @@ export const filterByOriginalText = (
     }
   })
 
-  // 우선순위 순서대로 병합
+  // 각 그룹을 원어 표기 길이 순으로 정렬 (짧을수록 일치율이 높음)
+  const sortByLength = (a: ForeignWordEntry, b: ForeignWordEntry) =>
+    a['원어 표기'].length - b['원어 표기'].length
+
+  // 우선순위 순서대로 병합 (exactMatch는 정렬 불필요)
   return [
     ...exactMatch,
-    ...wordExactMatch,
-    ...startsWithQuery,
-    ...wordBoundaryStartMatch,
-    ...endsWithQuery,
-    ...wordPartialOrBoundaryEnd,
-    ...contains,
+    ...wordExactMatch.sort(sortByLength),
+    ...startsWithQuery.sort(sortByLength),
+    ...wordBoundaryStartMatch.sort(sortByLength),
+    ...endsWithQuery.sort(sortByLength),
+    ...wordPartialOrBoundaryEnd.sort(sortByLength),
+    ...contains.sort(sortByLength),
   ]
 }
