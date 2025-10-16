@@ -7,9 +7,8 @@ set -e  # 에러 발생 시 중단
 echo "📥 외래어 표기 사전 다운로드 중..."
 curl -sSL -o dictionary.xlsx 'https://korean.go.kr/kornorms/standard/example/excelDownload.do?regltn_code=0003'
 
-# 2. Python 가상환경 활성화 및 CSV 변환
+# 2. CSV 변환
 echo "🔄 CSV 파일로 변환 중..."
-source importer/.venv/bin/activate
 python importer/convert_to_csv.py dictionary.xlsx src/assets/data.csv
 
 # 3. 임시 파일 삭제
