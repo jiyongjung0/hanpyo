@@ -20,7 +20,7 @@ export default defineConfig({
             options: {
               cacheName: 'csv-cache',
               expiration: {
-                maxAgeSeconds: 60 * 60 * 24 * 365, // 1년
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30일
               },
             },
           },
