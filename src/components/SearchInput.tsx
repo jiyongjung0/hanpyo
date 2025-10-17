@@ -20,8 +20,8 @@ export const SearchInput = ({ value, onChange }: SearchInputProps) => {
         return
       }
 
-      // modifier 키와 함께 눌린 경우 무시 (Ctrl+C, Cmd+V 등)
-      if (e.ctrlKey || e.altKey || e.metaKey) {
+      // 스페이스바, 혹은 modifier 키와 함께 눌린 경우 무시 (Ctrl+C, Cmd+V 등)
+      if (e.ctrlKey || e.altKey || e.metaKey || e.key === ' ') {
         return
       }
 
