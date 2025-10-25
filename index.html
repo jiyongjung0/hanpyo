@@ -5,6 +5,23 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>외래어 표기 용례 찾기</title>
+
+    <!-- Google Analytics 4 (프로덕션 환경에서만 활성화) -->
+    <script>
+      if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        // gtag.js 스크립트 동적 로드
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-W2STXRMQEK';
+        document.head.appendChild(script);
+
+        // Google Analytics 초기화
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-W2STXRMQEK');
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

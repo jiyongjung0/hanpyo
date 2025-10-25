@@ -16,6 +16,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **실시간 검색**: 대소문자 구분 없이 원어 표기 검색
 - **검색어 하이라이팅**: 검색 결과의 원어 표기에서 매칭된 부분을 녹색으로 강조 표시
 - **전역 키보드 입력**: 입력창에 포커스가 없어도 일반 문자 입력 시 자동으로 입력창에 포커스
+- **Google Analytics 4 통합**: 방문자 통계 수집
 - CSV 데이터 파싱 및 필터링 (PapaParse 사용)
 - 검색 결과 테이블 표시 (구분, 한글 표기, 원어 표기, 언어명, 국명, 의미)
 - 데이터 출처 및 업데이트 날짜 표시
