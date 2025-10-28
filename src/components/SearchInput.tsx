@@ -1,4 +1,7 @@
 import { useEffect, useRef } from 'react'
+import styles from './SearchInput.module.css'
+import { MESSAGES } from '../constants/messages'
+import { useGlobalKeyboardFocus } from '../hooks/useGlobalKeyboardFocus'
 
 interface SearchInputProps {
   value: string
@@ -13,27 +16,7 @@ export const SearchInput = ({ value, onChange }: SearchInputProps) => {
   }, [])
 
   // 전역 키보드 이벤트: 입력창에 포커스가 없어도 일반 문자 입력 시 자동 포커스
-  useEffect(() => {
-    const handleGlobalKeyDown = (e: KeyboardEvent) => {
-      // 이미 입력창에 포커스가 있으면 무시
-      if (document.activeElement === inputRef.current) {
-        return
-      }
-
-      // 스페이스바, 혹은 modifier 키와 함께 눌린 경우 무시 (Ctrl+C, Cmd+V 등)
-      if (e.ctrlKey || e.altKey || e.metaKey || e.key === ' ') {
-        return
-      }
-
-      // 입력 가능한 단일 문자인 경우에만 포커스 이동
-      if (e.key.length === 1) {
-        inputRef.current?.focus()
-      }
-    }
-
-    document.addEventListener('keydown', handleGlobalKeyDown)
-    return () => document.removeEventListener('keydown', handleGlobalKeyDown)
-  }, [])
+  useGlobalKeyboardFocus(inputRef)
 
   const handleClear = () => {
     onChange('')
@@ -51,22 +34,22 @@ export const SearchInput = ({ value, onChange }: SearchInputProps) => {
   }
 
   return (
-    <div className="search-section">
-      <div className="search-input-wrapper">
+    <div className={styles.searchSection}>
+      <div className={styles.inputWrapper}>
         <input
           ref={inputRef}
           type="text"
-          placeholder="원어 표기를 입력하세요 (예: Josie)"
+          placeholder={MESSAGES.INPUT_PLACEHOLDER}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="search-input"
+          className={styles.input}
         />
         {value && (
           <button
             onClick={handleClear}
-            className="clear-button"
-            aria-label="입력 내용 지우기"
+            className={styles.clearButton}
+            aria-label={MESSAGES.CLEAR_BUTTON_LABEL}
             type="button"
           >
             ✕

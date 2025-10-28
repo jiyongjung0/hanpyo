@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { loadCSVData } from '../utils/csvLoader'
 import type { ForeignWordEntry } from '../types/ForeignWord'
+import { MESSAGES } from '../constants/messages'
 
 export const useForeignWordData = () => {
   const [data, setData] = useState<ForeignWordEntry[]>([])
@@ -15,7 +16,7 @@ export const useForeignWordData = () => {
         setData(csvData)
         setError(null)
       } catch (err) {
-        setError('데이터를 불러오는데 실패했습니다.')
+        setError(MESSAGES.LOAD_ERROR)
         console.error(err)
       } finally {
         setLoading(false)

@@ -56,35 +56,49 @@ npm run preview
 
 ```
 src/
-├── main.tsx                    # 애플리케이션 진입점
-├── App.tsx                     # 메인 컨테이너 컴포넌트
-├── dataUpdateDate.ts           # 데이터 업데이트 날짜 상수
-├── components/                 # 재사용 가능한 컴포넌트
-│   ├── SearchInput.tsx         # 검색 입력 컴포넌트
-│   ├── SearchInput.test.tsx    # SearchInput 테스트
-│   ├── ResultsTable.tsx        # 결과 테이블 컴포넌트
-│   └── ResultsTable.test.tsx   # ResultsTable 테스트
-├── hooks/                      # 커스텀 React 훅
-│   ├── useForeignWordData.ts   # CSV 데이터 로딩 훅
-│   └── useSearch.ts            # 검색 로직 훅
-├── utils/                      # 유틸리티 함수
-│   ├── csvLoader.ts            # CSV 파일 로드 및 파싱
-│   ├── search.ts               # 검색 필터링 로직
-│   ├── search.test.ts          # search 테스트
-│   ├── highlight.tsx           # 검색어 하이라이팅 유틸리티
-│   └── highlight.test.tsx      # highlight 테스트
-├── types/                      # TypeScript 타입 정의
-│   └── ForeignWord.ts          # CSV 데이터 타입
-├── assets/                     # 정적 자산
-│   └── data.csv                # 외래어 표기 데이터 (2025년 10월 기준 약 8.4MB)
-└── test/                       # 테스트 설정
-    └── setup.ts                # Vitest 설정
+├── main.tsx                       # 애플리케이션 진입점
+├── App.tsx                        # 메인 컨테이너 컴포넌트
+├── App.css                        # 전역 스타일
+├── dataUpdateDate.ts              # 데이터 업데이트 날짜 상수
+├── components/                    # 재사용 가능한 컴포넌트
+│   ├── SearchInput.tsx            # 검색 입력 컴포넌트
+│   ├── SearchInput.module.css     # SearchInput 스타일
+│   ├── SearchInput.test.tsx       # SearchInput 테스트
+│   ├── ResultsTable.tsx           # 결과 테이블 컴포넌트
+│   ├── ResultsTable.module.css    # ResultsTable 스타일
+│   ├── ResultsTable.test.tsx      # ResultsTable 테스트
+│   ├── Footer.tsx                 # 푸터 컴포넌트
+│   └── icons/
+│       └── GitHubIcon.tsx         # GitHub 아이콘 컴포넌트
+├── hooks/                         # 커스텀 React 훅
+│   ├── useForeignWordData.ts      # CSV 데이터 로딩 훅
+│   ├── useSearch.ts               # 검색 로직 훅
+│   ├── useGlobalKeyboardFocus.ts  # 전역 키보드 포커스 훅
+│   └── useDelayedMessage.ts       # 딜레이 메시지 표시 훅
+├── utils/                         # 유틸리티 함수
+│   ├── csvLoader.ts               # CSV 파일 로드 및 파싱
+│   ├── search.ts                  # 검색 필터링 로직
+│   ├── search.test.ts             # search 테스트
+│   ├── highlight.tsx              # 검색어 하이라이팅 유틸리티
+│   └── highlight.test.tsx         # highlight 테스트
+├── constants/                     # 상수 정의
+│   ├── messages.ts                # 메시지 문자열
+│   ├── urls.ts                    # 외부 URL
+│   └── timing.ts                  # 타이밍 값
+├── styles/                        # 스타일 리소스
+│   └── variables.css              # CSS 변수 (색상, 간격 등)
+├── types/                         # TypeScript 타입 정의
+│   └── ForeignWord.ts             # CSV 데이터 타입
+├── assets/                        # 정적 자산
+│   └── data.csv                   # 외래어 표기 데이터 (2025년 10월 기준 약 8.4MB)
+└── test/                          # 테스트 설정
+    └── setup.ts                   # Vitest 설정
 
 scripts/
-└── update-dictionary.sh        # 사전 업데이트 배치 스크립트
+└── update-dictionary.sh           # 사전 업데이트 배치 스크립트
 
 importer/
-└── convert_to_csv.py           # 엑셀 파일을 CSV로 변환하는 Python 스크립트
+└── convert_to_csv.py              # 엑셀 파일을 CSV로 변환하는 Python 스크립트
 ```
 
 ## 아키텍처 설계
@@ -92,13 +106,17 @@ importer/
 ### 관심사의 분리 (Separation of Concerns)
 
 1. **컴포넌트 (Presentation Layer)**
-   - `SearchInput`: 검색 입력 UI
-   - `ResultsTable`: 검색 결과 테이블 UI
+   - `SearchInput`: 검색 입력 UI (CSS 모듈 사용)
+   - `ResultsTable`: 검색 결과 테이블 UI (CSS 모듈 사용)
+   - `Footer`: 데이터 출처 및 GitHub 링크 표시
+   - `GitHubIcon`: GitHub 아이콘 SVG 컴포넌트
    - 순수 프레젠테이션 컴포넌트로 설계 (props를 통한 데이터 전달)
 
 2. **커스텀 훅 (Business Logic Layer)**
    - `useForeignWordData`: 데이터 로딩 및 상태 관리
    - `useSearch`: 검색 쿼리 및 필터링 로직
+   - `useGlobalKeyboardFocus`: 전역 키보드 이벤트 처리
+   - `useDelayedMessage`: 조건부 딜레이 메시지 표시
    - 비즈니스 로직을 재사용 가능한 훅으로 분리
 
 3. **유틸리티 (Utility Layer)**
@@ -106,6 +124,15 @@ importer/
    - `search`: 순수 함수로 구현된 검색 필터링 로직
    - `highlight`: 검색어 하이라이팅 로직 (정규식 기반 텍스트 분리 및 JSX 변환)
    - 테스트 가능한 순수 함수로 설계
+
+4. **상수 (Constants Layer)**
+   - `messages`: UI 메시지 문자열 중앙 관리
+   - `urls`: 외부 링크 URL 중앙 관리
+   - `timing`: 타이밍 관련 값 중앙 관리
+
+5. **스타일 (Styling Layer)**
+   - `variables.css`: CSS 변수로 색상, 간격, 글꼴 등 중앙 관리
+   - CSS 모듈을 사용한 컴포넌트별 스타일 격리
 
 ### 검색 알고리즘
 

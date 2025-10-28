@@ -1,0 +1,118 @@
+.resultsSection {
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
+  box-sizing: border-box;
+}
+
+.resultsSection.empty {
+  height: 0;
+  margin-bottom: 0;
+}
+
+.resultCount {
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-base);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  text-align: right;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.table thead {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  position: sticky;
+  top: 0;
+}
+
+.table th {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color var(--transition-fast);
+  background-color: var(--color-bg);
+}
+
+.table tbody tr:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.table td {
+  padding: 0.9rem var(--spacing-md);
+  vertical-align: top;
+}
+
+.koreanText {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  max-width: 30%;
+  overflow-wrap: break-word;
+}
+
+.originalText {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  max-width: 30%;
+  overflow-wrap: break-word;
+}
+
+.originalText strong {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+.meaningText {
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.noResults {
+  text-align: center;
+  padding: var(--spacing-xl);
+  font-size: var(--font-size-xl);
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-light);
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: var(--font-size-sm);
+  }
+
+  .table th,
+  .table td {
+    padding: var(--spacing-sm) 0.4rem;
+  }
+
+  .originalText {
+    font-size: var(--font-size-sm);
+  }
+
+  .koreanText {
+    font-size: 0.9rem;
+  }
+
+  .meaningText {
+    font-size: var(--font-size-sm);
+  }
+}

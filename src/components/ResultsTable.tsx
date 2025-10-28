@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react'
 import type { ForeignWordEntry } from '../types/ForeignWord'
 import { isValidSearchQuery } from '../utils/search'
 import { highlightText } from '../utils/highlight'
+import styles from './ResultsTable.module.css'
+import { MESSAGES } from '../constants/messages'
+import { TIMING } from '../constants/timing'
+import { useDelayedMessage } from '../hooks/useDelayedMessage'
 
 interface ResultsTableProps {
   data: ForeignWordEntry[]
@@ -9,35 +12,23 @@ interface ResultsTableProps {
 }
 
 export const ResultsTable = ({ data, query }: ResultsTableProps) => {
-  const [showInvalidMessage, setShowInvalidMessage] = useState(false)
-
-  // 검색어가 유효하지 않을 때 - 1초 딜레이
-  const isInvalid = query.trim() && !isValidSearchQuery(query)
-
-  useEffect(() => {
-    if (isInvalid) {
-      const timer = setTimeout(() => {
-        setShowInvalidMessage(true)
-      }, 1000)
-      return () => clearTimeout(timer)
-    } else {
-      setShowInvalidMessage(false)
-    }
-  }, [isInvalid])
+  // 검색어가 유효하지 않을 때 - 딜레이 후 메시지 표시
+  const isInvalid = Boolean(query.trim() && !isValidSearchQuery(query))
+  const showInvalidMessage = useDelayedMessage(isInvalid, TIMING.INVALID_QUERY_DELAY)
 
   // 검색어가 없을 때
   if (!query.trim()) {
-    return <div className="results-section empty"></div>
+    return <div className={`${styles.resultsSection} ${styles.empty}`}></div>
   }
 
   if (isInvalid && !showInvalidMessage) {
-    return <div className="results-section empty"></div>
+    return <div className={`${styles.resultsSection} ${styles.empty}`}></div>
   }
 
   if (isInvalid && showInvalidMessage) {
     return (
-      <div className="results-section">
-        <div className="no-results">영어는 두 글자 이상 입력해주세요.</div>
+      <div className={styles.resultsSection}>
+        <div className={styles.noResults}>{MESSAGES.INVALID_QUERY}</div>
       </div>
     )
   }
@@ -45,19 +36,19 @@ export const ResultsTable = ({ data, query }: ResultsTableProps) => {
   // 검색 결과가 없을 때
   if (data.length === 0) {
     return (
-      <div className="results-section">
-        <div className="no-results">검색 결과가 없습니다.</div>
+      <div className={styles.resultsSection}>
+        <div className={styles.noResults}>{MESSAGES.NO_RESULTS}</div>
       </div>
     )
   }
 
   return (
-    <div className="results-section">
-      <div className="result-count">
+    <div className={styles.resultsSection}>
+      <div className={styles.resultCount}>
         {data.length}건
       </div>
-      <div className="table-wrapper">
-        <table className="results-table">
+      <div className={styles.tableWrapper}>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th>원어 표기</th>
@@ -71,12 +62,12 @@ export const ResultsTable = ({ data, query }: ResultsTableProps) => {
           <tbody>
             {data.map((entry, index) => (
               <tr key={`${entry['원어 표기']}-${index}`}>
-                <td data-label="원어 표기" className="original-text">{highlightText(entry['원어 표기'], query)}</td>
-                <td data-label="한글 표기" className="korean-text">{entry['한글 표기']}</td>
+                <td data-label="원어 표기" className={styles.originalText}>{highlightText(entry['원어 표기'], query)}</td>
+                <td data-label="한글 표기" className={styles.koreanText}>{entry['한글 표기']}</td>
                 <td data-label="구분">{entry.구분}</td>
                 <td data-label="언어명">{entry.언어명}</td>
                 <td data-label="국명">{entry.국명}</td>
-                <td data-label="의미" className="meaning-text">{entry.의미}</td>
+                <td data-label="의미" className={styles.meaningText}>{entry.의미}</td>
               </tr>
             ))}
           </tbody>
