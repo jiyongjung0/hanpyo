@@ -68,3 +68,16 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* 접근성: 시각적으로 숨기지만 스크린 리더는 읽을 수 있는 클래스 */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

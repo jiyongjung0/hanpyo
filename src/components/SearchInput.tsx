@@ -35,15 +35,20 @@ export const SearchInput = ({ value, onChange }: SearchInputProps) => {
 
   return (
     <div className={styles.searchSection}>
+      <label htmlFor="search-input" className="visually-hidden">
+        {MESSAGES.INPUT_LABEL}
+      </label>
       <div className={styles.inputWrapper}>
         <input
           ref={inputRef}
+          id="search-input"
           type="text"
           placeholder={MESSAGES.INPUT_PLACEHOLDER}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
           className={styles.input}
+          aria-label={MESSAGES.INPUT_LABEL}
         />
         {value && (
           <button

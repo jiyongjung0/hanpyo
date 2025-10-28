@@ -28,7 +28,9 @@ export const ResultsTable = ({ data, query }: ResultsTableProps) => {
   if (isInvalid && showInvalidMessage) {
     return (
       <div className={styles.resultsSection}>
-        <div className={styles.noResults}>{MESSAGES.INVALID_QUERY}</div>
+        <div className={styles.noResults} role="status" aria-live="polite">
+          {MESSAGES.INVALID_QUERY}
+        </div>
       </div>
     )
   }
@@ -37,18 +39,28 @@ export const ResultsTable = ({ data, query }: ResultsTableProps) => {
   if (data.length === 0) {
     return (
       <div className={styles.resultsSection}>
-        <div className={styles.noResults}>{MESSAGES.NO_RESULTS}</div>
+        <div className={styles.noResults} role="status" aria-live="polite">
+          {MESSAGES.NO_RESULTS}
+        </div>
       </div>
     )
   }
 
   return (
     <div className={styles.resultsSection}>
-      <div className={styles.resultCount}>
-        {data.length}건
+      <div
+        className={styles.resultCount}
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {MESSAGES.RESULTS_COUNT(data.length)}
       </div>
       <div className={styles.tableWrapper}>
         <table className={styles.table}>
+          <caption className="visually-hidden">
+            {MESSAGES.SEARCH_RESULTS_CAPTION}
+          </caption>
           <thead>
             <tr>
               <th>원어 표기</th>

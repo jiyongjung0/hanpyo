@@ -13,7 +13,12 @@ export const MESSAGES = {
 
   // 입력창
   INPUT_PLACEHOLDER: '원어 표기를 입력하세요 (예: Josie)',
+  INPUT_LABEL: '원어 표기 검색',
   CLEAR_BUTTON_LABEL: '입력 내용 지우기',
+
+  // 검색 결과
+  SEARCH_RESULTS_CAPTION: '외래어 표기 검색 결과',
+  RESULTS_COUNT: (count: number) => `${count}건`,
 
   // Footer
   DATA_SOURCE_LABEL: '데이터 출처:',
