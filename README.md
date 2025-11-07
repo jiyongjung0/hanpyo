@@ -28,7 +28,7 @@
 
 ## 문의
 
-GitHub issue나 `bwhite8129 @ gmail.com`로 연락 부탁드립니다.
+GitHub issue나 `jiyongjung0 @ gmail.com`로 연락 부탁드립니다.
 
 ## 개발 정보
 
