@@ -1,12 +1,19 @@
 #!/bin/bash
 # 사전 업데이트 배치 스크립트
+# 옵션:
+#   --full  기존 CSV를 무시하고 전체 데이터를 새로 받습니다.
 
 set -e  # 에러 발생 시 중단
+
+FULL_FLAG=""
+if [[ "$1" == "--full" ]]; then
+  FULL_FLAG="--full"
+fi
 
 # 1. API로 CSV 업데이트
 # 필요한 환경변수: KOREAN_GO_KR_SERVICE_KEY
 echo "🔄 외래어 표기 사전 업데이트 중..."
-python importer/update_csv.py src/assets/data.csv
+python importer/update_csv.py $FULL_FLAG src/assets/data.csv
 
 # 2. 사전 변경사항이 없으면 종료
 if ! git diff --quiet src/assets/data.csv; then

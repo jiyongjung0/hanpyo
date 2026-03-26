@@ -16,8 +16,8 @@ import json
 API_BASE = "https://korean.go.kr/kornorms/exampleReqList.do"
 SERVICE_KEY = os.environ.get("KOREAN_GO_KR_SERVICE_KEY", "")
 LANG_TYPE = "0003"
-NUM_OF_ROWS = 50
-DELAY_BETWEEN_REQUESTS = 0.2  # 서버 부하 방지용 딜레이 (초)
+NUM_OF_ROWS = 100
+DELAY_BETWEEN_REQUESTS = 1  # 서버 부하 방지용 딜레이 (초)
 MAX_RETRIES = 5               # 타임아웃 시 최대 재시도 횟수
 RETRY_DELAY = 5               # 재시도 전 대기 시간 (초)
 
@@ -96,19 +96,27 @@ def write_csv(path: str, rows: list[dict]) -> None:
 
 
 def main():
-    if len(sys.argv) != 2:
-        print("usage: ./update_csv.py <output_csv>")
+    args = sys.argv[1:]
+    full_update = "--full" in args
+    args = [a for a in args if a != "--full"]
+
+    if len(args) != 1:
+        print("usage: ./update_csv.py [--full] <output_csv>")
         sys.exit(1)
 
-    output_path = sys.argv[1]
+    output_path = args[0]
 
     if not SERVICE_KEY:
         print("오류: 환경변수 KOREAN_GO_KR_SERVICE_KEY가 설정되지 않았습니다.")
         sys.exit(1)
 
-    print("📂 기존 CSV 로드 중...")
-    existing_rows, existing_set = load_existing_csv(output_path)
-    print(f"   기존 항목 수: {len(existing_rows)}")
+    if full_update:
+        print("⚠️  전체 업데이트 모드: 기존 CSV를 무시하고 전체 데이터를 새로 받습니다.")
+        existing_rows, existing_set = [], set()
+    else:
+        print("📂 기존 CSV 로드 중...")
+        existing_rows, existing_set = load_existing_csv(output_path)
+        print(f"   기존 항목 수: {len(existing_rows)}")
 
     new_rows: list[dict] = []
     page_no = 1
@@ -130,7 +138,7 @@ def main():
         page_rows = [api_item_to_row(item) for item in items]
         changed = [r for r in page_rows if row_to_tuple(r) not in existing_set]
 
-        if not changed:
+        if not changed and not full_update:
             print(f"   변경사항 없음. 종료합니다. (페이지 {page_no}에서 중단)")
             break
 
