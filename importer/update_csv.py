@@ -18,6 +18,8 @@ SERVICE_KEY = os.environ.get("KOREAN_GO_KR_SERVICE_KEY", "")
 LANG_TYPE = "0003"
 NUM_OF_ROWS = 50
 DELAY_BETWEEN_REQUESTS = 0.2  # 서버 부하 방지용 딜레이 (초)
+MAX_RETRIES = 5               # 타임아웃 시 최대 재시도 횟수
+RETRY_DELAY = 5               # 재시도 전 대기 시간 (초)
 
 CSV_HEADERS = ["구분", "한글 표기", "원어 표기", "국명", "언어명", "의미"]
 
@@ -49,9 +51,18 @@ def fetch_page(page_no: int) -> dict:
     })
     url = f"{API_BASE}?{params}"
 
+    print(f"   요청 URL: {url}")
     req = urllib.request.Request(url, headers={"User-Agent": "hanpyo-updater/1.0"})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        data = json.loads(resp.read().decode("utf-8"))
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+            break
+        except TimeoutError as e:
+            if attempt >= MAX_RETRIES:
+                raise
+            print(f"   타임아웃 발생 (시도 {attempt}/{MAX_RETRIES}), {RETRY_DELAY}초 후 재시도... ({e})")
+            time.sleep(RETRY_DELAY)
 
     response = data.get("response", {})
     if response.get("resultcode") != 0:
