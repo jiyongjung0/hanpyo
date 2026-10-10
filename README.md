@@ -34,13 +34,20 @@ GitHub issue나 `jiyongjung0 @ gmail.com`로 연락 부탁드립니다.
 
 ### 시작하기
 
+[Volta](https://docs.volta.sh/guide/getting-started)를 설치하면 프로젝트 디렉터리에서
+`package.json`에 고정된 Node.js 24.10.0과 npm 11.12.0을 자동으로 사용합니다.
+Volta 설치 후 터미널을 다시 열어 실행하세요.
+
 ```bash
 # 저장소 클론
 git clone https://github.com/jiyongjung0/hanpyo.git
 cd hanpyo
 
-# 의존성 설치
-npm install
+# 고정된 Node.js 및 npm 설치
+volta fetch node@24.10.0 npm@11.12.0
+
+# 잠금 파일 기준으로 의존성 설치
+npm ci
 
 # 개발 서버 시작
 npm run dev
